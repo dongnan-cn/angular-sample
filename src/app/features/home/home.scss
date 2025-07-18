@@ -1,0 +1,44 @@
+.home-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(9, 30, 66, 0.08);
+  padding: 32px 40px;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+
+.project-list {
+  margin-top: 32px;
+  h3 {
+    color: #253858;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  li {
+    background: #f4f5f7;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(9, 30, 66, 0.08);
+    padding: 20px 28px;
+    min-width: 220px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+    &:hover {
+      background: #e9efff;
+      box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
+    }
+    span {
+      color: #0747a6;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+  }
+}
