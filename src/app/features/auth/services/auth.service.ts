@@ -47,7 +47,10 @@ export class AuthService {
         if (users.length > 0) {
           // 登录成功，模拟 token
           const user = users[0];
+          console.log('user: ', user)
           const token = btoa(`${user.username}:${user.role}`);
+          console.log('token: ', token)
+
           this.setToken(token);
           this.currentUser.set(user);
         }

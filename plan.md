@@ -105,29 +105,50 @@ Angular 19 Jira Clone - 基于 Angular 19 的全功能项目管理与协作平�
 
 ## 5. Mock 后端行为实现方案
 
-我们将采用 `angular-in-memory-web-api` 来模拟后端行为，因为它能够模拟完整的 RESTful CRUD 操作，并且服务层代码与真实后端几乎一致，方便后期切换。
+我们将采用 **json-server** 来模拟后端行为，因为它能够模拟完整的 RESTful CRUD 操作，并且服务层代码与真实后端几乎一致，方便后期切换。
 
 **实现步骤：**
 
-1. 安装 angular-in-memory-web-api：
+1. 安装 json-server：
    ```shell
-   npm install angular-in-memory-web-api
+   npm install -g json-server
    ```
-2. 创建 InMemoryDataService：实现 `InMemoryDbService` 接口，定义初始的 projects, tasks, users, auth 等集合数据。
-3. 在 `createDb()` 方法中初始化 Mock 数据。
-4. 实现 `genId()` 方法以支持非数字 ID（如字符串 ID）。
-5. 配置 `HttpClientInMemoryWebApiModule`：
-   - 在 `app.config.ts` 中，导入并使用：
-     ```typescript
-     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500 })
-     ```
-     // delay 参数用于模拟网络延迟
-6. 服务层代码：你的 `ProjectService`, `TaskService`, `AuthService` 等将继续使用 `HttpClient` 发送正常的 HTTP 请求（GET, POST, PUT, DELETE），`angular-in-memory-web-api` 会自动拦截并处理这些请求。
+2. 创建 db.json 文件：在项目根目录下新建 `db.json`，定义初始的 users, projects, tasks 等集合数据。
+3. 在 `db.json` 中初始化 Mock 数据，例如：
+   ```json
+   {
+     "users": [
+       { "id": 1, "username": "admin", "password": "admin", "role": "admin" },
+       { "id": 2, "username": "user", "password": "user", "role": "user" }
+     ],
+     "projects": [],
+     "tasks": []
+   }
+   ```
+4. 启动 json-server：
+   ```shell
+   json-server --watch db.json --port 3000
+   ```
+5. 配置代理：在 Angular 项目根目录下创建 `proxy.conf.json`，内容如下：
+   ```json
+   {
+     "/api": {
+       "target": "http://localhost:3000",
+       "secure": false,
+       "changeOrigin": true,
+       "pathRewrite": { "^/api": "" }
+     }
+   }
+   ```
+   并在启动 Angular 项目时加上代理参数：
+   ```shell
+   ng serve --proxy-config proxy.conf.json
+   ```
+6. 服务层代码：你的 `ProjectService`, `TaskService`, `AuthService` 等将继续使用 `HttpClient` 发送正常的 HTTP 请求（GET, POST, PUT, DELETE），`json-server` 会自动拦截并处理这些请求。
 7. JWT 认证模拟：
-   - 在 `InMemoryDataService` 中模拟一个 `/authenticate` 端点，接收到正确的用户名/密码时，返回一个硬编码的 Mock JWT 字符串。
-   - 前端的 `AuthService` 接收到这个字符串后，将其存储在 `localStorage` 中。
+   - 由于 json-server 不支持自定义登录端点，前端通过 `/api/users?username=xxx&password=xxx` 查询用户，登录成功后前端自行生成并存储 token。
    - 其他请求通过 HTTP 拦截器将这个 Mock JWT 附加到 Authorization 头中，用于模拟后续的认证检查。
-8. 数据持久性：每次刷新页面，Mock 数据会重置为 `InMemoryDataService` 中定义的初始状态。
+8. 数据持久性：每次修改 db.json 或通过 API 修改数据，json-server 会自动更新本地文件，数据不会因页面刷新而丢失。
 
 ## 6. 项目结构与工具
 
@@ -198,74 +219,4 @@ cd angular-jira-clone
 > - `--routing`：自动生成路由配置。
 > - `--style=scss`：使用 SCSS 作为样式预处理器。
 
-### 8.2 安装并配置 angular-in-memory-web-api
 
-```shell
-npm install angular-in-memory-web-api --save
-```
-
-### 8.3 创建 InMemoryDataService
-
-1. 在 `src/app/core/services/` 目录下新建 `in-memory-data.service.ts` 文件：
-2. 实现 `InMemoryDbService` 接口，定义初始的 users、projects、tasks、auth 等集合数据。
-3. 实现 `createDb()` 方法，返回初始数据对象。
-4. 可选：实现 `genId()` 方法，支持自定义ID生成。
-
-```typescript
-// src/app/core/services/in-memory-data.service.ts
-import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Injectable } from '@angular/core';
-
-@Injectable({ providedIn: 'root' })
-export class InMemoryDataService implements InMemoryDbService {
-  createDb() {
-    // 这里定义初始的 mock 数据
-    const users = [
-      { id: 1, username: 'admin', password: 'admin', role: 'admin' },
-      { id: 2, username: 'user', password: 'user', role: 'user' }
-    ];
-    const projects = [];
-    const tasks = [];
-    return { users, projects, tasks };
-  }
-  // 可选：自定义ID生成逻辑
-  genId<T extends { id: any }>(collection: T[]): any {
-    return collection.length > 0 ? Math.max(...collection.map(item => +item.id)) + 1 : 1;
-  }
-}
-```
-
-### 8.4 配置 HttpClientInMemoryWebApiModule
-
-1. 在 `app.config.ts` 或 `app.module.ts` 中引入并配置：
-
-```typescript
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './core/services/in-memory-data.service';
-
-// ...
-imports: [
-  // ... 其他模块
-  HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500 }) // 模拟网络延迟
-]
-```
-
-### 8.5 测试基础 HTTP 请求
-
-- 使用 Angular 的 HttpClient 在服务中发起 GET/POST/PUT/DELETE 请求，确认 Mock API 能正常返回数据。
-- 可在 `app.component.ts` 或新建一个 service 进行简单测试。
-
-### 8.6 目录结构建议
-
-```text
-src/app/
-├── core/
-│   └── services/
-│       └── in-memory-data.service.ts
-├── app.config.ts 或 app.module.ts
-└── ...
-```
-
-> **注释：**
-> - 建议将 Mock 服务放在 core/services 目录，便于统一管理。
-> - 后续可根据实际业务扩展 mock 数据结构。
