@@ -2,6 +2,19 @@
 <div class="home-container">
   <h2>欢迎，{{ user?.username }}！</h2>
   <p>这是你的主页，后续可以在这里展示项目列表、快捷入口等内容。</p>
+
+  <!-- 项目列表展示 -->
+  <div class="project-list">
+    <h3>项目列表</h3>
+    <div *ngIf="projects.length === 0">暂无项目</div>
+    <ul *ngIf="projects.length > 0">
+      <li *ngFor="let project of projects">
+        <!-- 展示项目名称，可扩展更多字段 -->
+        <span>{{ project.name || '未命名项目' }}</span>
+      </li>
+    </ul>
+  </div>
+
   <!-- 退出登录按钮 -->
   <button (click)="logout()">退出登录</button>
 </div>

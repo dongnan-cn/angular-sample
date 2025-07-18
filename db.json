@@ -3,6 +3,10 @@
     { "id": 1, "username": "admin", "password": "admin", "role": "admin" },
     { "id": 2, "username": "user", "password": "user", "role": "user" }
   ],
-  "projects": [],
+  "projects": [
+    { "id": 1, "name": "Jira Clone 项目管理系统" },
+    { "id": 2, "name": "前端组件库开发" },
+    { "id": 3, "name": "团队协作平台" }
+  ],
   "tasks": []
 } 

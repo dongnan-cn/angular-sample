@@ -40,3 +40,14 @@ Apply to in-memory-da...
 10. UI 细节与用户体验优化
 登录/注册失败时显示错误提示。
 登录状态下显示用户信息及退出按钮。
+
+
+
+创建 ProjectService
+用于通过 HttpClient 从 /api/projects 获取项目列表数据。
+在 Home 组件中注入 ProjectService
+        在 Home 组件的 ngOnInit 或 effect 中调用 service 获取项目数据。
+在 Home 页面展示项目列表
+    用 ngFor 遍历项目数组，渲染为卡片、表格或列表。
+（可选）实现项目的增删改查
+    后续可扩展为创建、编辑、删除项目等功能。
