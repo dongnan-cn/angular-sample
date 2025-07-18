@@ -6,6 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // 引入自定义的 InMemoryDataService
 import { InMemoryDataService } from './core/services/in-memory-data.service';
+// 引入 AuthInterceptor
+import { authInterceptor } from './features/auth/interceptors/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { routes } from './app.routes';
 
@@ -19,6 +22,12 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       HttpClientModule,
       HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500 })
-    )
+    ),
+    // 注册 AuthInterceptor，使其对所有 HTTP 请求生效
+    {
+      provide: HTTP_INTERCEPTORS,
+      useValue: authInterceptor,
+      multi: true
+    }
   ]
 };

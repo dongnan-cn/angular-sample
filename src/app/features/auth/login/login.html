@@ -1,0 +1,33 @@
+<!-- 登录表单页面 -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+  <!-- 用户名输入框 -->
+  <div class="form-group">
+    <label for="username">用户名</label>
+    <input id="username" type="text" formControlName="username" placeholder="请输入用户名" />
+    <div class="error" *ngIf="form.get('username')?.touched && form.get('username')?.invalid">
+      用户名为必填项
+    </div>
+  </div>
+
+  <!-- 密码输入框 -->
+  <div class="form-group">
+    <label for="password">密码</label>
+    <input id="password" type="password" formControlName="password" placeholder="请输入密码" />
+    <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      密码为必填项
+    </div>
+  </div>
+
+  <!-- 登录失败错误提示 -->
+  <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+  <!-- 提交按钮 -->
+  <button type="submit" [disabled]="form.invalid">登录</button>
+</form>
+
+<!-- 注册引导链接 -->
+<div class="register-link">
+  <!-- 提示还没有账号的用户跳转到注册页 -->
+  <span>还没有账号？</span>
+  <a routerLink="/register">立即注册</a>
+</div>
