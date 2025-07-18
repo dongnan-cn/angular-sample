@@ -35,17 +35,22 @@ export class AuthService {
   }
 
   /**
-   * 登录方法，调用 mock API 验证用户名和密码
+   * 登录方法，直接查询 users 集合，模拟登录校验
    * @param username 用户名
    * @param password 密码
    */
-  login(username: string, password: string): Observable<{ token: string }> {
-    // 这里假设 mock API /login 返回 { token: 'xxx' }
-    return this.http.post<{ token: string }>('/api/login', { username, password }).pipe(
-      tap(res => {
-        this.setToken(res.token);
-        const user = this.parseToken(res.token);
-        if (user) this.currentUser.set(user);
+  login(username: string, password: string): Observable<User[]> {
+    console.log('login')
+    return this.http.get<User[]>(`/api/users?username=${username}&password=${password}`).pipe(
+      tap(users => {
+        console.log('pipe here')
+        if (users.length > 0) {
+          // 登录成功，模拟 token
+          const user = users[0];
+          const token = btoa(`${user.username}:${user.role}`);
+          this.setToken(token);
+          this.currentUser.set(user);
+        }
       })
     );
   }
