@@ -143,10 +143,11 @@ import { Task, TaskPriority, TaskType } from '../../models/task.model';
       height: 14px;
     }
     
-    .priority-icon.urgent { color: #d32f2f; }
+    .priority-icon.highest { color: #d32f2f; }
     .priority-icon.high { color: #f57c00; }
     .priority-icon.medium { color: #fbc02d; }
     .priority-icon.low { color: #388e3c; }
+    .priority-icon.lowest { color: #4caf50; }
     
     .more-menu {
       width: 24px;
@@ -317,7 +318,7 @@ export class TaskCardComponent {
    */
   getPriorityConfig(): { icon: string; color: string } {
     switch (this.task.priority) {
-      case TaskPriority.URGENT:
+      case TaskPriority.HIGHEST:
         return { icon: 'keyboard_double_arrow_up', color: '#ff5630' };
       case TaskPriority.HIGH:
         return { icon: 'keyboard_arrow_up', color: '#ff8b00' };
@@ -325,6 +326,8 @@ export class TaskCardComponent {
         return { icon: 'remove', color: '#ffab00' };
       case TaskPriority.LOW:
         return { icon: 'keyboard_arrow_down', color: '#36b37e' };
+      case TaskPriority.LOWEST:
+        return { icon: 'keyboard_double_arrow_down', color: '#57d9a3' };
       default:
         return { icon: 'remove', color: '#666' };
     }

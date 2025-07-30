@@ -2,10 +2,11 @@
  * 任务优先级枚举
  */
 export enum TaskPriority {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-  URGENT = 'urgent'
+  LOWEST = 'LOWEST',
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  HIGHEST = 'HIGHEST'
 }
 
 /**
@@ -96,7 +97,7 @@ export interface Task {
   actualHours?: number;
   
   /** 截止日期 */
-  dueDate?: Date;
+  dueDate?: string;
   
   /** 创建时间 */
   createdAt: Date;
@@ -118,7 +119,7 @@ export interface Task {
 }
 
 /**
- * 创建任务的请求接口
+ * 创建任务请求接口
  */
 export interface CreateTaskRequest {
   title: string;
@@ -127,9 +128,9 @@ export interface CreateTaskRequest {
   type: TaskType;
   assigneeId?: string;
   reporterId: string;
-  labelIds: string[];
+  labelIds?: string[];
   estimatedHours?: number;
-  dueDate?: Date;
+  dueDate?: string;
   projectId: string;
   columnId: string;
 }
@@ -147,7 +148,7 @@ export interface UpdateTaskRequest {
   labelIds?: string[];
   estimatedHours?: number;
   actualHours?: number;
-  dueDate?: Date;
+  dueDate?: string;
   columnId?: string;
   position?: number;
 }

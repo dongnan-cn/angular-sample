@@ -343,10 +343,11 @@ export class TaskService {
    */
   private getPriorityWeight(priority: TaskPriority): number {
     switch (priority) {
-      case TaskPriority.URGENT: return 4;
-      case TaskPriority.HIGH: return 3;
-      case TaskPriority.MEDIUM: return 2;
-      case TaskPriority.LOW: return 1;
+      case TaskPriority.HIGHEST: return 5;
+      case TaskPriority.HIGH: return 4;
+      case TaskPriority.MEDIUM: return 3;
+      case TaskPriority.LOW: return 2;
+      case TaskPriority.LOWEST: return 1;
       default: return 0;
     }
   }

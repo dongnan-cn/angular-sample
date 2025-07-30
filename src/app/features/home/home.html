@@ -13,12 +13,14 @@
       <div class="project-list">
         <h3>项目列表</h3>
         <div *ngIf="projects.length === 0">暂无项目</div>
-        <ul *ngIf="projects.length > 0">
-          <li *ngFor="let project of projects">
-            <!-- 展示项目名称，可扩展更多字段 -->
-            <span>{{ project.name || '未命名项目' }}</span>
-          </li>
-        </ul>
+        <div class="project-cards" *ngIf="projects.length > 0">
+           <div class="project-card" *ngFor="let project of projects" (click)="navigateToKanban(project.id)">
+             <h4>{{ project.name || '未命名项目' }}</h4>
+             <div class="project-meta">
+               <span class="project-id">ID: {{ project.id }}</span>
+             </div>
+           </div>
+         </div>
       </div>
 
       <!-- 退出登录按钮 -->

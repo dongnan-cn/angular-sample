@@ -45,4 +45,12 @@ export class Home implements OnInit {
     this.auth.logout();
     this.router.navigateByUrl('/login');
   }
+
+  /**
+   * 导航到项目看板页面
+   * @param projectId 项目ID
+   */
+  navigateToKanban(projectId: number | string) {
+    this.router.navigate(['/kanban'], { queryParams: { projectId: projectId.toString() } });
+  }
 }

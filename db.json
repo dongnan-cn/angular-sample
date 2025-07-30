@@ -33,5 +33,33 @@
       "name": "团队协作平台"
     }
   ],
-  "tasks": []
+  "tasks": [],
+  "kanbans": [
+    {
+      "id": "1",
+      "name": "项目看板",
+      "description": "主要项目任务管理看板",
+      "projectId": "1",
+      "columns": [
+        {
+          "id": "col-1",
+          "name": "待办",
+          "position": 0,
+          "color": "#e3f2fd"
+        },
+        {
+          "id": "col-2",
+          "name": "进行中",
+          "position": 1,
+          "color": "#fff3e0"
+        },
+        {
+          "id": "col-3",
+          "name": "已完成",
+          "position": 2,
+          "color": "#e8f5e8"
+        }
+      ]
+    }
+  ]
 }

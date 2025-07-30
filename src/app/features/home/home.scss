@@ -26,30 +26,56 @@
     font-size: 1.2rem;
     margin-bottom: 16px;
   }
-  ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
+  .project-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
   }
-  li {
-    background: #f4f5f7;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(9, 30, 66, 0.08);
-    padding: 20px 28px;
-    min-width: 220px;
-    margin-bottom: 16px;
-    transition: box-shadow 0.2s, background 0.2s;
+  
+  .project-card {
+    background: #ffffff;
+    border: 1px solid #dfe1e6;
+    border-radius: 8px;
+    padding: 20px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(9, 30, 66, 0.08);
+    
     &:hover {
-      background: #e9efff;
+      background: #f4f5f7;
+      border-color: #0052cc;
       box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
+      transform: translateY(-2px);
     }
-    span {
-      color: #0747a6;
-      font-weight: 500;
-      font-size: 1.1rem;
+    
+    h4 {
+      margin: 0 0 8px 0;
+      color: #172b4d;
+      font-size: 16px;
+      font-weight: 600;
     }
-  }
-}
+    
+    p {
+      margin: 0 0 12px 0;
+      color: #5e6c84;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .project-id {
+         background: #dfe1e6;
+         color: #5e6c84;
+         padding: 2px 8px;
+         border-radius: 4px;
+         font-size: 12px;
+         font-weight: 500;
+       }
+     }
+   }
+ }

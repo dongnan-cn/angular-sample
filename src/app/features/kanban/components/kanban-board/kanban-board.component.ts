@@ -7,8 +7,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { KanbanColumnComponent } from '../kanban-column/kanban-column.component';
+import { TaskDialogComponent, TaskDialogData } from '../task-dialog/task-dialog.component';
 import { Kanban, KanbanColumn } from '../../models/kanban.model';
 import { Task, CreateTaskRequest, UpdateTaskRequest } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
@@ -30,7 +32,8 @@ import { KanbanService } from '../../services/kanban.service';
     MatProgressSpinnerModule,
     MatDividerModule,
     MatSnackBarModule,
-    KanbanColumnComponent
+    KanbanColumnComponent,
+    TaskDialogComponent
   ],
   template: `
     <div class="kanban-board">
@@ -319,6 +322,7 @@ export class KanbanBoardComponent implements OnInit {
   private readonly taskService = inject(TaskService);
   private readonly kanbanService = inject(KanbanService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
   
   // 响应式状态管理
   readonly loading = signal<boolean>(false);
@@ -433,8 +437,33 @@ export class KanbanBoardComponent implements OnInit {
    * 任务编辑事件
    */
   onTaskEdit(task: Task): void {
-    // TODO: 打开任务编辑对话框
-    console.log('编辑任务:', task);
+    const dialogData: TaskDialogData = {
+      task: task,
+      columnId: task.columnId,
+      projectId: task.projectId,
+      mode: 'edit'
+    };
+
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: dialogData,
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action === 'update') {
+        this.taskService.updateTask(task.id, result.data).subscribe({
+          next: () => {
+            this.showMessage('任务更新成功');
+          },
+          error: (error: any) => {
+            console.error('更新任务失败:', error);
+            this.showMessage('更新任务失败');
+          }
+        });
+      }
+    });
   }
   
   /**
@@ -499,8 +528,32 @@ export class KanbanBoardComponent implements OnInit {
    * 添加任务事件
    */
   onAddTask(columnId: string): void {
-    // TODO: 打开添加任务对话框
-    console.log('添加任务到列:', columnId);
+    const dialogData: TaskDialogData = {
+      columnId: columnId,
+      projectId: this.projectId || '',
+      mode: 'create'
+    };
+
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: dialogData,
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action === 'create') {
+        this.taskService.createTask(result.data).subscribe({
+          next: () => {
+            this.showMessage('任务创建成功');
+          },
+          error: (error: any) => {
+            console.error('创建任务失败:', error);
+            this.showMessage('创建任务失败');
+          }
+        });
+      }
+    });
   }
   
   /**
