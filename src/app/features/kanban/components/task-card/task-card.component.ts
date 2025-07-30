@@ -102,98 +102,151 @@ import { Task, TaskPriority, TaskType } from '../../models/task.model';
   `,
   styles: [`
     .task-card {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
       position: relative;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
     
     .task-card:hover {
-      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
-      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+      border-color: rgba(102, 126, 234, 0.2);
     }
     
     .task-card.selected {
-      border-left-color: #1976d2;
-      background-color: #f3f7ff;
+      border-left-color: #667eea;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
     }
     
     .task-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      padding: 16px 16px 0 16px;
     }
     
     .task-type-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      padding: 4px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .task-type-icon.story { 
+      color: #38a169;
+      background: rgba(56, 161, 105, 0.1);
+    }
+    .task-type-icon.bug { 
+      color: #e53e3e;
+      background: rgba(229, 62, 62, 0.1);
+    }
+    .task-type-icon.task { 
+      color: #3182ce;
+      background: rgba(49, 130, 206, 0.1);
+    }
+    .task-type-icon.epic { 
+      color: #805ad5;
+      background: rgba(128, 90, 213, 0.1);
+    }
+    
+    .priority-icon {
       font-size: 16px;
       width: 16px;
       height: 16px;
+      padding: 2px;
+      border-radius: 4px;
     }
     
-    .task-type-icon.story { color: #4caf50; }
-    .task-type-icon.bug { color: #f44336; }
-    .task-type-icon.task { color: #2196f3; }
-    .task-type-icon.epic { color: #9c27b0; }
-    
-    .priority-icon {
-      font-size: 14px;
-      width: 14px;
-      height: 14px;
+    .priority-icon.highest { 
+      color: #c53030;
+      background: rgba(197, 48, 48, 0.1);
     }
-    
-    .priority-icon.highest { color: #d32f2f; }
-    .priority-icon.high { color: #f57c00; }
-    .priority-icon.medium { color: #fbc02d; }
-    .priority-icon.low { color: #388e3c; }
-    .priority-icon.lowest { color: #4caf50; }
+    .priority-icon.high { 
+      color: #dd6b20;
+      background: rgba(221, 107, 32, 0.1);
+    }
+    .priority-icon.medium { 
+      color: #d69e2e;
+      background: rgba(214, 158, 46, 0.1);
+    }
+    .priority-icon.low { 
+      color: #38a169;
+      background: rgba(56, 161, 105, 0.1);
+    }
+    .priority-icon.lowest { 
+      color: #68d391;
+      background: rgba(104, 211, 145, 0.1);
+    }
     
     .more-menu {
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    
+    .more-menu:hover {
+      background: rgba(102, 126, 234, 0.1);
     }
     
     .more-menu mat-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #718096;
     }
     
     .task-title {
       margin: 0 0 8px 0;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.3;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #2d3748;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      padding: 0 16px;
     }
     
     .task-description {
-      margin: 0 0 8px 0;
-      font-size: 12px;
-      color: #666;
-      line-height: 1.3;
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      color: #718096;
+      line-height: 1.4;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+      padding: 0 16px;
     }
     
     .task-labels {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      padding: 0 16px;
     }
     
     .task-labels mat-chip {
-      font-size: 10px;
-      height: 20px;
+      font-size: 11px;
+      height: 22px;
       color: white;
-      margin-right: 4px;
+      margin-right: 6px;
+      border-radius: 11px;
+      font-weight: 500;
     }
     
     .task-footer {
@@ -201,43 +254,51 @@ import { Task, TaskPriority, TaskType } from '../../models/task.model';
       justify-content: space-between;
       align-items: center;
       margin-top: 8px;
+      padding: 0 16px 16px 16px;
     }
     
     .task-meta {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
     }
     
     .time-info, .due-date {
       display: flex;
       align-items: center;
-      gap: 2px;
-      font-size: 11px;
-      color: #666;
+      gap: 4px;
+      font-size: 12px;
+      color: #718096;
+      background: rgba(113, 128, 150, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 500;
     }
     
     .time-icon, .date-icon {
-      font-size: 12px;
-      width: 12px;
-      height: 12px;
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
     }
     
     .due-date.overdue {
-      color: #f44336;
+      color: #e53e3e;
+      background: rgba(229, 62, 62, 0.1);
     }
     
     .assignee .avatar {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background-color: #1976d2;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      font-weight: 500;
+      font-size: 11px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      border: 2px solid white;
     }
     
     /* 拖拽状态样式 */

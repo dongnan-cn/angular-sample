@@ -40,7 +40,7 @@ import { Task, CreateTaskRequest } from '../../models/task.model';
             [style.color]="column.color">
             list
           </mat-icon>
-          <span class="task-count" [matBadge]="tasks.length" matBadgeColor="primary">
+          <span class="task-count">
             {{ tasks.length }}
           </span>
         </div>
@@ -107,77 +107,108 @@ import { Task, CreateTaskRequest } from '../../models/task.model';
   `,
   styles: [`
     .kanban-column {
-      width: 300px;
+      width: 320px;
       min-height: 400px;
-      margin-right: 16px;
       display: flex;
       flex-direction: column;
-      background-color: #f5f5f5;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .kanban-column:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
     
     .column-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
-      background-color: white;
-      border-bottom: 1px solid #e0e0e0;
-      min-height: 56px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+      min-height: 64px;
+      position: relative;
+    }
+    
+    .column-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
     }
     
     .column-title-section {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       flex: 1;
     }
     
     .column-title {
       margin: 0;
-      font-size: 16px;
-      font-weight: 500;
-      color: #333;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      letter-spacing: -0.025em;
     }
     
-    .column-status-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+    .column-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
     }
     
     .task-count {
       font-size: 12px;
-      color: #666;
-      background-color: #e3f2fd;
-      padding: 2px 6px;
-      border-radius: 10px;
-      min-width: 20px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 4px 8px;
+      border-radius: 12px;
+      min-width: 24px;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
     }
     
     .column-menu {
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .column-menu:hover {
+      background: rgba(102, 126, 234, 0.1);
     }
     
     .column-menu mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: #4a5568;
     }
     
     .delete-action {
-      color: #f44336;
+      color: #e53e3e;
     }
     
     .tasks-container {
       flex: 1;
-      padding: 8px;
+      padding: 16px;
       min-height: 200px;
       overflow-y: auto;
+      background: rgba(248, 250, 252, 0.5);
     }
     
     .empty-state {
@@ -185,43 +216,70 @@ import { Task, CreateTaskRequest } from '../../models/task.model';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 32px 16px;
+      padding: 40px 20px;
       text-align: center;
-      color: #999;
+      color: #718096;
       min-height: 200px;
     }
     
     .empty-icon {
-      font-size: 48px;
-      width: 48px;
-      height: 48px;
-      margin-bottom: 16px;
-      opacity: 0.5;
+      font-size: 56px;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 20px;
+      opacity: 0.6;
+      color: #a0aec0;
     }
     
     .empty-text {
-      margin: 0 0 16px 0;
-      font-size: 14px;
+      margin: 0 0 24px 0;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
     }
     
     .add-task-btn {
-      color: #1976d2;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      transition: all 0.2s ease;
+    }
+    
+    .add-task-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
     }
     
     .column-footer {
-      padding: 8px;
-      background-color: white;
-      border-top: 1px solid #e0e0e0;
+      padding: 12px 16px;
+      background: rgba(248, 250, 252, 0.8);
+      border-top: 1px solid rgba(102, 126, 234, 0.1);
     }
     
     .quick-add-btn {
       width: 100%;
-      color: #666;
+      color: #4a5568;
       justify-content: flex-start;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px dashed rgba(102, 126, 234, 0.3);
+    }
+    
+    .quick-add-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.5);
+      color: #667eea;
     }
     
     .quick-add-btn mat-icon {
       margin-right: 8px;
+      color: #667eea;
     }
     
     /* 拖拽相关样式 */

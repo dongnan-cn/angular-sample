@@ -12,7 +12,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { KanbanColumnComponent } from '../kanban-column/kanban-column.component';
 import { TaskDialogComponent, TaskDialogData } from '../task-dialog/task-dialog.component';
 import { Kanban, KanbanColumn } from '../../models/kanban.model';
-import { Task, CreateTaskRequest, UpdateTaskRequest } from '../../models/task.model';
+import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 import { KanbanService } from '../../services/kanban.service';
 
@@ -32,8 +32,7 @@ import { KanbanService } from '../../services/kanban.service';
     MatProgressSpinnerModule,
     MatDividerModule,
     MatSnackBarModule,
-    KanbanColumnComponent,
-    TaskDialogComponent
+    KanbanColumnComponent
   ],
   template: `
     <div class="kanban-board">
@@ -148,14 +147,28 @@ import { KanbanService } from '../../services/kanban.service';
       height: 100vh;
       display: flex;
       flex-direction: column;
-      background-color: #fafafa;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+    }
+    
+    .kanban-board::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+      pointer-events: none;
     }
     
     .board-toolbar {
-      background-color: white;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       color: #333;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .toolbar-content {
@@ -173,8 +186,12 @@ import { KanbanService } from '../../services/kanban.service';
     
     .board-title {
       margin: 0;
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     
     .board-description {
@@ -192,6 +209,17 @@ import { KanbanService } from '../../services/kanban.service';
       align-items: center;
     }
     
+    .toolbar-actions button {
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .toolbar-actions button:hover {
+      background: rgba(102, 126, 234, 0.2);
+      transform: translateY(-1px);
+    }
+    
     .loading-container {
       display: flex;
       flex-direction: column;
@@ -199,13 +227,15 @@ import { KanbanService } from '../../services/kanban.service';
       justify-content: center;
       flex: 1;
       gap: 16px;
-      color: #666;
+      color: rgba(255, 255, 255, 0.8);
     }
     
     .board-container {
       flex: 1;
       overflow: hidden;
-      padding: 16px;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
     }
     
     .columns-wrapper {
@@ -214,6 +244,7 @@ import { KanbanService } from '../../services/kanban.service';
       overflow-x: auto;
       overflow-y: hidden;
       padding-bottom: 16px;
+      gap: 16px;
     }
     
     .add-column-container {
@@ -223,17 +254,35 @@ import { KanbanService } from '../../services/kanban.service';
     }
     
     .add-column-btn {
-      min-width: 200px;
-      height: 48px;
-      border: 2px dashed #ccc;
-      color: #666;
-      background-color: transparent;
+      min-width: 280px;
+      height: 80px;
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      color: white;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
     
     .add-column-btn:hover {
-      border-color: #1976d2;
-      color: #1976d2;
-      background-color: #f3f7ff;
+      border-color: rgba(255, 255, 255, 0.8);
+      color: white;
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+    
+    .add-column-btn mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
     }
     
     .empty-board {
@@ -243,28 +292,50 @@ import { KanbanService } from '../../services/kanban.service';
       justify-content: center;
       flex: 1;
       text-align: center;
-      color: #666;
+      color: rgba(255, 255, 255, 0.8);
       padding: 32px;
     }
     
     .empty-icon {
-      font-size: 64px;
-      width: 64px;
-      height: 64px;
-      margin-bottom: 16px;
-      opacity: 0.5;
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
+      opacity: 0.6;
+      color: rgba(255, 255, 255, 0.7);
     }
     
     .empty-board h3 {
-      margin: 0 0 8px 0;
-      font-size: 24px;
-      font-weight: 400;
+      margin: 0 0 12px 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: white;
     }
     
     .empty-board p {
-      margin: 0 0 24px 0;
-      font-size: 16px;
+      margin: 0 0 32px 0;
+      font-size: 18px;
       max-width: 400px;
+      line-height: 1.6;
+    }
+    
+    .empty-board button {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .empty-board button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
     
     /* 滚动条样式 */
@@ -273,17 +344,17 @@ import { KanbanService } from '../../services/kanban.service';
     }
     
     .columns-wrapper::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 4px;
     }
     
     .columns-wrapper::-webkit-scrollbar-thumb {
-      background: #ccc;
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 4px;
     }
     
     .columns-wrapper::-webkit-scrollbar-thumb:hover {
-      background: #999;
+      background: rgba(255, 255, 255, 0.5);
     }
     
     /* 响应式设计 */
@@ -299,15 +370,17 @@ import { KanbanService } from '../../services/kanban.service';
       }
       
       .board-title {
-        font-size: 18px;
+        font-size: 20px;
       }
       
       .board-container {
-        padding: 8px;
+        padding: 16px;
       }
       
       .add-column-btn {
-        min-width: 150px;
+        min-width: 200px;
+        height: 50px;
+        font-size: 14px;
       }
     }
   `]
