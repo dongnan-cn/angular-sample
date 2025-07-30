@@ -20,6 +20,11 @@ export const routes: Routes = [
     path: 'register',
     component: Register
   },
+  {
+    path: 'kanban',
+    loadChildren: () => import('./features/kanban/kanban.module').then(m => m.KanbanModule),
+    canActivate: [authGuard]
+  },
   // 默认路由指向主页，需登录后才能访问
   { path: '', component: Home, canActivate: [authGuard] }
 ];
