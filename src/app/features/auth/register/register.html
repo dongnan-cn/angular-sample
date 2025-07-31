@@ -1,36 +1,54 @@
-<!-- 注册表单页面 -->
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">
-  <!-- 用户名输入框 -->
-  <div class="form-group">
-    <label for="username">用户名</label>
-    <input id="username" type="text" formControlName="username" placeholder="请输入用户名" />
-    <div class="error" *ngIf="form.get('username')?.touched && form.get('username')?.invalid">
-      用户名为必填项
+<!-- 注册页面容器 -->
+<div class="register-container">
+  <div class="register-card">
+    <!-- 注册标题 -->
+    <div class="register-title">
+      <h1>创建账户</h1>
+      <p>注册新账户以开始使用</p>
+    </div>
+
+    <!-- 注册表单 -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- 用户名输入框 -->
+      <div class="form-group">
+        <label for="username">用户名</label>
+        <input id="username" type="text" formControlName="username" placeholder="请输入用户名" />
+        <div class="error" *ngIf="form.get('username')?.touched && form.get('username')?.invalid">
+          用户名为必填项
+        </div>
+      </div>
+
+      <!-- 密码输入框 -->
+      <div class="form-group">
+        <label for="password">密码</label>
+        <input id="password" type="password" formControlName="password" placeholder="请输入密码" />
+        <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          <span *ngIf="form.get('password')?.errors?.['required']">密码为必填项</span>
+          <span *ngIf="form.get('password')?.errors?.['minlength']">密码长度不能少于4位</span>
+        </div>
+      </div>
+
+      <!-- 确认密码输入框 -->
+      <div class="form-group">
+        <label for="confirmPassword">确认密码</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="请再次输入密码" />
+        <div class="error" *ngIf="form.get('confirmPassword')?.touched && form.hasError('passwordMismatch')">
+          两次输入的密码不一致
+        </div>
+      </div>
+
+      <!-- 注册失败错误提示 -->
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <!-- 提交按钮 -->
+      <button type="submit" [disabled]="form.invalid">注册</button>
+    </form>
+
+    <!-- 登录链接 -->
+    <div class="login-link">
+      <!-- 提示已有账号的用户跳转到登录页 -->
+      <span>已有账号？</span>
+      <a routerLink="/login">立即登录</a>
     </div>
   </div>
-
-  <!-- 密码输入框 -->
-  <div class="form-group">
-    <label for="password">密码</label>
-    <input id="password" type="password" formControlName="password" placeholder="请输入密码" />
-    <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
-      <span *ngIf="form.get('password')?.errors?.['required']">密码为必填项</span>
-      <span *ngIf="form.get('password')?.errors?.['minlength']">密码长度不能少于4位</span>
-    </div>
-  </div>
-
-  <!-- 确认密码输入框 -->
-  <div class="form-group">
-    <label for="confirmPassword">确认密码</label>
-    <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="请再次输入密码" />
-    <div class="error" *ngIf="form.get('confirmPassword')?.touched && form.hasError('passwordMismatch')">
-      两次输入的密码不一致
-    </div>
-  </div>
-
-  <!-- 注册失败错误提示 -->
-  <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
-
-  <!-- 提交按钮 -->
-  <button type="submit" [disabled]="form.invalid">注册</button>
-</form>
+</div>
