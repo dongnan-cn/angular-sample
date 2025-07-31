@@ -1,52 +1,170 @@
+// 侧边栏样式 - 与整个网站风格保持一致
 .sidebar {
-  width: 220px;
-  background: #253858;
+  width: 260px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 24px 0;
+  padding: 32px 0;
+  position: relative;
+  z-index: 10;
+  
+  // Logo 样式
   .logo {
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 28px;
+    font-weight: 800;
     color: #fff;
     text-align: center;
-    margin-bottom: 32px;
-    letter-spacing: 2px;
+    margin-bottom: 48px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
+  
+  // 导航菜单样式
   .menu {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
+    padding: 0 20px;
+    
     a {
-      color: #b6c2cf;
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
-      padding: 10px 32px;
-      border-left: 4px solid transparent;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      &.active, &:hover {
-        background: #1b2638;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      // 悬停光效
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
         color: #fff;
-        border-left: 4px solid #2684ff;
+        transform: translateX(8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        
+        &::before {
+          left: 100%;
+        }
+      }
+      
+      &.active {
+        background: rgba(255, 255, 255, 0.25);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transform: translateX(8px);
+        
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 4px;
+          height: 60%;
+          background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.8));
+          border-radius: 0 2px 2px 0;
+        }
       }
     }
   }
+  
+  // 用户信息区域样式
   .user-section {
-    padding: 24px 0 0 0;
+    padding: 32px 20px 0 20px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px 20px 0 0;
+    margin: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: none;
+    
     .avatar {
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin-bottom: 8px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+        border-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
     }
+    
     .username {
       display: block;
-      color: #b6c2cf;
-      font-size: 1rem;
-      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 8px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
   }
-} 
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+    padding: 24px 0;
+    
+    .logo {
+      font-size: 24px;
+      margin-bottom: 32px;
+    }
+    
+    .menu {
+      padding: 0 16px;
+      
+      a {
+        padding: 14px 16px;
+        font-size: 15px;
+      }
+    }
+    
+    .user-section {
+      padding: 24px 16px 0 16px;
+      margin: 0 16px;
+      
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .username {
+        font-size: 14px;
+      }
+    }
+  }
+}
