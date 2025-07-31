@@ -33,7 +33,27 @@
       "name": "团队协作平台"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "79c9",
+      "title": "阿第三方",
+      "description": "阿第三方",
+      "status": "todo",
+      "priority": "MEDIUM",
+      "type": "task",
+      "reporter": {
+        "id": "current-user-id",
+        "name": "",
+        "email": ""
+      },
+      "labels": [],
+      "estimatedHours": 0,
+      "actualHours": 0,
+      "projectId": "1",
+      "columnId": "col-1",
+      "position": 0
+    }
+  ],
   "kanbans": [
     {
       "id": "1",
