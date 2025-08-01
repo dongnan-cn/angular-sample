@@ -292,6 +292,12 @@
     padding-bottom: 8px !important; // 调整底部填充
   }
 
+  // 为所有输入元素添加内边距，让内容不要太靠边
+  .mat-mdc-input-element {
+    padding: 12px 16px !important; // 上下12px，左右16px的内边距
+    box-sizing: border-box !important;
+  }
+
   // 调整 placeholder 的位置，使其在浮动标签下方
   .mat-mdc-input-element::placeholder {
     // 默认行为应该没问题，如果需要调整，在这里添加
@@ -299,9 +305,10 @@
 
   // 特别针对 textarea，确保其标签和文本位置正确
   textarea.mat-mdc-input-element {
-    padding-top: 16px !important; // 为 textarea 顶部留出更多空间
+    padding: 20px 16px 12px 16px !important; // 上20px，左右16px，下12px
     min-height: 60px; // 根据 rows="4" 调整合适的高度
     resize: vertical; // 允许用户垂直调整大小
+    box-sizing: border-box !important;
   }
 
   // 确保 textarea 的浮动标签定位 - 针对 textarea 的 mdc-text-field--textarea 类
@@ -325,6 +332,8 @@
     font-weight: 600;
     font-size: 15px;
     letter-spacing: 0.2px;
+    padding: 12px 16px !important; // 为选择框内容添加内边距
+    box-sizing: border-box !important;
   }
 
   .mat-mdc-select-arrow {
