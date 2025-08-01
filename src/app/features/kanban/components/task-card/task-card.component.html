@@ -1,0 +1,72 @@
+<mat-card 
+  class="task-card" 
+  cdkDrag
+  [cdkDragData]="task"
+  (click)="onCardClick()"
+  [class.selected]="selected">
+  
+  <!-- 任务头部：类型图标和优先级 -->
+  <div class="task-header">
+    <mat-icon class="task-type-icon" [class]="getTypeIconClass()">{{ getTypeIcon() }}</mat-icon>
+    <mat-icon class="priority-icon" [class]="getPriorityClass()">{{ getPriorityIcon() }}</mat-icon>
+    
+    <!-- 更多操作菜单 -->
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-menu" (click)="$event.stopPropagation()">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onEdit()">
+        <mat-icon>edit</mat-icon>
+        <span>编辑</span>
+      </button>
+      <button mat-menu-item (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        <span>删除</span>
+      </button>
+    </mat-menu>
+  </div>
+  
+  <!-- 任务标题 -->
+  <mat-card-content>
+    <h4 class="task-title" [matTooltip]="task.title">{{ task.title }}</h4>
+    
+    <!-- 任务描述（如果有） -->
+    <p class="task-description" *ngIf="task.description" [matTooltip]="task.description">
+      {{ task.description }}
+    </p>
+    
+    <!-- 任务标签 -->
+    <div class="task-labels" *ngIf="task.labels && task.labels.length > 0">
+      <mat-chip-set>
+        <mat-chip *ngFor="let label of task.labels" [style.background-color]="label.color">
+          {{ label.name }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+  
+  <!-- 任务底部：分配者、工时、截止日期 -->
+  <div class="task-footer">
+    <div class="task-meta">
+      <!-- 预估工时 -->
+      <div class="time-info" *ngIf="task.estimatedHours">
+        <mat-icon class="time-icon">schedule</mat-icon>
+        <span>{{ task.estimatedHours }}h</span>
+      </div>
+      
+      <!-- 截止日期 -->
+      <div class="due-date" *ngIf="task.dueDate" [class.overdue]="isOverdue()">
+        <mat-icon class="date-icon">event</mat-icon>
+        <span>{{ formatDate(task.dueDate) }}</span>
+      </div>
+    </div>
+    
+    <!-- 分配者头像 -->
+    <div class="assignee" *ngIf="task.assignee">
+      <div class="avatar" [matTooltip]="task.assignee.name">
+        {{ getInitials(task.assignee.name) }}
+      </div>
+    </div>
+  </div>
+</mat-card>
