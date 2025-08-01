@@ -158,6 +158,7 @@
 // Material 表单字段自定义样式 - 增强美化
 ::ng-deep .task-dialog .mat-mdc-form-field {
   overflow: visible !important; // 确保表单字段容器允许内容溢出
+  padding-top: 10px;
   // 仅调整输入框的视觉外观，不干扰标签定位
   .mat-mdc-text-field-wrapper {
     background: linear-gradient(145deg,
