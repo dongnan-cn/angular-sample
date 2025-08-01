@@ -159,6 +159,27 @@
 ::ng-deep .task-dialog .mat-mdc-form-field {
   overflow: visible !important; // 确保表单字段容器允许内容溢出
   padding-top: 10px;
+
+    .mdc-notched-outline {
+    // 确保整个凹槽轮廓没有边框
+    // border-width: 1 !important; // 移除所有边框宽度
+    // border-style: none !important; // 移除所有边框样式
+    // box-shadow: none !important; // 确保没有阴影模拟边框
+
+    // 针对组成凹槽轮廓的三个部分
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-width: 1 !important; // 移除它们的边框宽度
+      border-style: none !important; // 移除它们的边框样式
+      // box-shadow: none !important; // 确保没有阴影模拟边框
+      // 有时这些元素可能会有背景色或伪元素来绘制线条，需要进一步检查
+      background-color: transparent !important;
+      &::before, &::after {
+          content: none !important; // 移除可能的伪元素绘制的边框
+      }
+    }
+  }
   // 仅调整输入框的视觉外观，不干扰标签定位
   .mat-mdc-text-field-wrapper {
     background: linear-gradient(145deg,
@@ -205,6 +226,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
       transform: translateY(-2px);
     }
+    
   }
 
   // 标签文本的颜色和字体样式
