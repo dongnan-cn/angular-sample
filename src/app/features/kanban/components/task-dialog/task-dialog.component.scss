@@ -26,7 +26,7 @@
   backdrop-filter: blur(25px);
   border-radius: 28px;
   border: 2px solid rgba(102, 126, 234, 0.15);
-  box-shadow: 
+  box-shadow:
     0 25px 50px rgba(102, 126, 234, 0.15),
     0 10px 30px rgba(118, 75, 162, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -35,7 +35,7 @@
   font-family: 'Inter', 'Microsoft YaHei', sans-serif;
   display: flex;
   flex-direction: column;
-  
+
   // 背景装饰渐变条
   &::before {
     content: '';
@@ -44,15 +44,15 @@
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(135deg, 
-      #667eea 0%, 
-      #764ba2 25%, 
-      #f093fb 50%, 
-      #f5576c 75%, 
+    background: linear-gradient(135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
       #4facfe 100%);
     z-index: 1;
   }
-  
+
   // 背景纹理效果
   &::after {
     content: '';
@@ -61,7 +61,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
       radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgba(245, 87, 108, 0.03) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(75, 172, 254, 0.02) 0%, transparent 50%);
@@ -81,10 +81,10 @@
   font-weight: 800;
   letter-spacing: -0.5px;
   color: #1a202c;
-  background: linear-gradient(135deg, 
-    #667eea 0%, 
-    #764ba2 30%, 
-    #f093fb 60%, 
+  background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 30%,
+    #f093fb 60%,
     #f5576c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -113,21 +113,21 @@
   overflow-y: auto;
   background: transparent;
   min-height: 0;
-  
+
   // 自定义滚动条
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: rgba(102, 126, 234, 0.3);
     border-radius: 3px;
-    
+
     &:hover {
       background: rgba(102, 126, 234, 0.5);
     }
@@ -157,62 +157,19 @@
 
 // Material 表单字段自定义样式 - 增强美化
 ::ng-deep .task-dialog .mat-mdc-form-field {
-  &.mat-mdc-form-field-appearance-outline {
-    .mdc-notched-outline {
-      .mdc-notched-outline__notch {
-        .mat-mdc-form-field-label {
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-          line-height: 1.4 !important;
-          height: auto !important;
-          overflow: visible !important;
-          white-space: nowrap !important;
-        }
-      }
-      
-      .mdc-floating-label {
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        line-height: 1.4 !important;
-        height: auto !important;
-        overflow: visible !important;
-      }
-      
-      .mdc-floating-label--float-above {
-        transform: translateY(-37.25px) scale(0.75) !important;
-        top: 0 !important;
-      }
-    }
-    
-    .mat-mdc-notch-piece {
-      .mdc-notched-outline__notch {
-        height: auto !important;
-        min-height: 20px !important;
-        
-        .mat-label {
-          line-height: 1.4 !important;
-          height: auto !important;
-          overflow: visible !important;
-          white-space: nowrap !important;
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-        }
-      }
-    }
-  }
-  
+  overflow: visible !important; // 确保表单字段容器允许内容溢出
+  // 仅调整输入框的视觉外观，不干扰标签定位
   .mat-mdc-text-field-wrapper {
-    background: linear-gradient(145deg, 
-      rgba(255, 255, 255, 0.9), 
+    background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.9),
       rgba(248, 250, 252, 0.8)) !important;
     backdrop-filter: blur(15px) !important;
     border-radius: 18px !important;
     border: 2px solid rgba(102, 126, 234, 0.15) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     position: relative;
-    overflow: hidden;
-    
-    // 输入框光效
+    overflow: visible !important; // 关键：允许浮动标签溢出容器
+
     &::before {
       content: '';
       position: absolute;
@@ -220,61 +177,122 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, 
-        transparent, 
-        rgba(102, 126, 234, 0.1), 
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(102, 126, 234, 0.1),
         transparent);
       transition: left 0.6s;
     }
-    
+
     &:hover {
       border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 
+      box-shadow:
         0 8px 25px rgba(102, 126, 234, 0.15),
         0 4px 12px rgba(118, 75, 162, 0.1);
       transform: translateY(-1px);
-      
+
       &::before {
         left: 100%;
       }
     }
-    
+
     &.mdc-text-field--focused {
       border-color: #667eea;
-      box-shadow: 
+      box-shadow:
         0 12px 35px rgba(102, 126, 234, 0.25),
         0 6px 15px rgba(118, 75, 162, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
       transform: translateY(-2px);
     }
   }
-  
+
+  // 标签文本的颜色和字体样式
   .mat-mdc-form-field-label {
     color: #4a5568 !important;
     font-weight: 600 !important;
     font-size: 14px !important;
     letter-spacing: 0.3px !important;
     line-height: 1.2 !important;
-    top: 0 !important;
-    transform: translateY(0) !important;
   }
-  
+
+  // 确保 notch 区域能够容纳浮动标签
+  .mdc-notched-outline {
+    z-index: 1; // 边框本身在标签下面
+    overflow: visible !important; // 关键：允许内容溢出边框
+
+    .mdc-notched-outline__notch {
+      height: auto !important;
+      min-height: 28px !important; // 增加最小高度确保标签有空间
+      width: auto !important;
+      min-width: 100px !important; // 确保凹槽宽度足够
+      overflow: visible !important; // 关键：允许标签溢出凹槽
+    }
+
+    .mdc-floating-label{
+      position: relative;
+    }
+  }
+
+  // **关键修复：强制浮动标签的定位和背景**
+  // 针对所有浮动的标签 (mat-label)
   .mdc-floating-label {
-    line-height: 1.2 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+    // 默认状态（未浮动）
+    // 让 Material 默认处理
+    
+    // 浮动状态
+    &.mdc-floating-label--float-above {
+      top: -12px !important; // 向上移动更多，避免被边框遮挡
+      left: 12px !important; // 确保左侧位置正确
+      transform: translateY(0) scale(0.75) !important; // 保持 Material 的缩放，但移除 Y 轴位移
+      background: rgba(255, 255, 255, 0.98) !important; // 使用纯色背景，提高可见性
+      padding: 2px 8px !important; // 增加内边距
+      border-radius: 6px !important;
+      z-index: 1000 !important; // 大幅提高 z-index 确保在最上层
+      position: absolute !important; // 强制绝对定位
+      white-space: nowrap !important; // 防止文字换行
+      max-width: none !important; // 移除最大宽度限制
+      overflow: visible !important; // 确保内容可见
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; // 添加阴影增强可见性
+      border: 1px solid rgba(102, 126, 234, 0.2) !important; // 添加边框
+    }
   }
-  
-  .mdc-floating-label--float-above {
-    transform: translateY(-106%) scale(0.75) !important;
+
+
+  // 确保输入元素在标签下面
+  .mat-mdc-form-field-flex {
+    z-index: 0;
   }
-  
-  .mat-mdc-input-element {
-    color: #1a202c;
-    font-weight: 500;
-    font-size: 15px;
-    letter-spacing: 0.2px;
+
+  // 确保输入框的实际内容不被标签覆盖
+  .mat-mdc-form-field-infix {
+    padding-top: 24px !important; // 增加顶部填充，为浮动标签留出空间
+    padding-bottom: 8px !important; // 调整底部填充
   }
+
+  // 调整 placeholder 的位置，使其在浮动标签下方
+  .mat-mdc-input-element::placeholder {
+    // 默认行为应该没问题，如果需要调整，在这里添加
+  }
+
+  // 特别针对 textarea，确保其标签和文本位置正确
+  textarea.mat-mdc-input-element {
+    padding-top: 16px !important; // 为 textarea 顶部留出更多空间
+    min-height: 60px; // 根据 rows="4" 调整合适的高度
+    resize: vertical; // 允许用户垂直调整大小
+  }
+
+  // 确保 textarea 的浮动标签定位 - 针对 textarea 的 mdc-text-field--textarea 类
+  &.mat-mdc-form-field-has-textarea .mdc-floating-label {
+      // 默认状态 (未浮动)
+      top: 16px !important; // 针对 textarea 未浮动时的标签位置
+      transform: translateY(0) !important;
+
+      // 浮动状态
+      &.mdc-floating-label--float-above {
+        top: -10px !important; // <-- 针对 textarea 浮动后的位置，可以微调
+        transform: translateY(0) scale(0.75) !important; // 保持缩放
+      }
+    }
 }
 
 // 选择框样式 - 美化升级
@@ -285,7 +303,7 @@
     font-size: 15px;
     letter-spacing: 0.2px;
   }
-  
+
   .mat-mdc-select-arrow {
     color: #667eea;
   }
@@ -293,30 +311,30 @@
 
 // 下拉面板美化
 ::ng-deep .mat-mdc-select-panel {
-  background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.98), 
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.98),
     rgba(248, 250, 252, 0.95));
   backdrop-filter: blur(20px);
   border-radius: 16px;
   border: 1px solid rgba(102, 126, 234, 0.2);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(102, 126, 234, 0.15),
     0 8px 20px rgba(0, 0, 0, 0.1);
-  
+
   .mat-mdc-option {
     font-weight: 500;
     letter-spacing: 0.2px;
     transition: all 0.3s ease;
-    
+
     &:hover {
-      background: linear-gradient(135deg, 
-        rgba(102, 126, 234, 0.1), 
+      background: linear-gradient(135deg,
+        rgba(102, 126, 234, 0.1),
         rgba(118, 75, 162, 0.05));
     }
-    
+
     &.mdc-list-item--selected {
-      background: linear-gradient(135deg, 
-        rgba(102, 126, 234, 0.15), 
+      background: linear-gradient(135deg,
+        rgba(102, 126, 234, 0.15),
         rgba(118, 75, 162, 0.1));
       color: #667eea;
       font-weight: 600;
@@ -338,8 +356,7 @@
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
-  
-  // 光效动画
+
   &::before {
     content: '';
     position: absolute;
@@ -347,16 +364,16 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.4), 
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
       transparent);
     transition: left 0.6s;
   }
-  
+
   &:hover {
     transform: translateY(-1px) scale(1.05);
-    
+
     &::before {
       left: 100%;
     }
@@ -367,7 +384,7 @@
   background: linear-gradient(135deg, #10b981, #34d399, #6ee7b7);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
     border-color: rgba(16, 185, 129, 0.3);
@@ -378,7 +395,7 @@
   background: linear-gradient(135deg, #f59e0b, #fbbf24, #fde047);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
     border-color: rgba(245, 158, 11, 0.3);
@@ -389,7 +406,7 @@
   background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
     border-color: rgba(59, 130, 246, 0.3);
@@ -400,7 +417,7 @@
   background: linear-gradient(135deg, #f97316, #fb923c, #fdba74);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(249, 115, 22, 0.6);
     border-color: rgba(249, 115, 22, 0.3);
@@ -411,7 +428,7 @@
   background: linear-gradient(135deg, #ef4444, #f87171, #fca5a5);
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
     border-color: rgba(239, 68, 68, 0.3);
@@ -458,14 +475,14 @@
   padding: 14px 28px !important;
   border-radius: 20px !important;
   border: 2px solid rgba(107, 114, 128, 0.2) !important;
-  background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.8), 
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.8),
     rgba(248, 250, 252, 0.6)) !important;
   backdrop-filter: blur(10px) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -473,22 +490,22 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(107, 114, 128, 0.1), 
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(107, 114, 128, 0.1),
       transparent);
     transition: left 0.6s;
   }
-  
+
   &:hover {
-    background: linear-gradient(145deg, 
-      rgba(107, 114, 128, 0.1), 
+    background: linear-gradient(145deg,
+      rgba(107, 114, 128, 0.1),
       rgba(156, 163, 175, 0.05)) !important;
     color: #374151 !important;
     border-color: rgba(107, 114, 128, 0.3) !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 6px 20px rgba(107, 114, 128, 0.2) !important;
-    
+
     &::before {
       left: 100%;
     }
@@ -502,22 +519,21 @@
   letter-spacing: 0.5px !important;
   padding: 14px 32px !important;
   border-radius: 20px !important;
-  background: linear-gradient(135deg, 
-    #667eea 0%, 
-    #764ba2 25%, 
-    #f093fb 50%, 
-    #f5576c 75%, 
+  background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
     #4facfe 100%) !important;
   color: #ffffff !important;
   border: none !important;
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(102, 126, 234, 0.4),
     0 4px 12px rgba(118, 75, 162, 0.3) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
-  
-  // 按钮光效动画
+
   &::before {
     content: '';
     position: absolute;
@@ -525,35 +541,35 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.3), 
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
       transparent);
     transition: left 0.6s;
   }
-  
+
   &:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 
+    box-shadow:
       0 15px 40px rgba(102, 126, 234, 0.5),
       0 8px 20px rgba(118, 75, 162, 0.4) !important;
-    
+
     &::before {
       left: 100%;
     }
   }
-  
+
   &:active:not(:disabled) {
     transform: translateY(-1px) scale(1.01) !important;
   }
-  
+
   &:disabled {
     opacity: 0.6 !important;
     cursor: not-allowed !important;
     transform: none !important;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2) !important;
   }
-  
+
   mat-icon {
     margin-right: 8px;
     animation: spin 1s linear infinite;
@@ -564,7 +580,7 @@
 ::ng-deep .task-dialog .mat-mdc-form-field-icon-suffix {
   color: #667eea !important;
   transition: all 0.3s ease;
-  
+
   &:hover {
     color: #f5576c !important;
     transform: scale(1.1);
@@ -588,25 +604,25 @@
     max-width: 95vw;
     margin: 10px;
   }
-  
+
   .dialog-title {
     font-size: 20px;
     padding: 20px 24px 12px;
   }
-  
+
   .dialog-content {
     padding: 12px 24px;
   }
-  
+
   .dialog-actions {
     padding: 16px 24px 20px;
   }
-  
+
   .form-row {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .half-width {
     width: 100%;
   }
