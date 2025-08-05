@@ -251,6 +251,8 @@
       width: auto !important;
       min-width: 100px !important; // 确保凹槽宽度足够
       overflow: visible !important; // 关键：允许标签溢出凹槽
+      padding-top: 5px !important;
+      padding-left: 10px;
     }
 
     .mdc-floating-label{
@@ -290,7 +292,7 @@
 
   // 确保输入框的实际内容不被标签覆盖
   .mat-mdc-form-field-infix {
-    padding-top: 24px !important; // 增加顶部填充，为浮动标签留出空间
+    padding-top: 12px !important; // 增加顶部填充，为浮动标签留出空间
     padding-bottom: 8px !important; // 调整底部填充
   }
 
