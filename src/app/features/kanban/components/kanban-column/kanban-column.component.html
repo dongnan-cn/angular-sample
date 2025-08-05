@@ -1,0 +1,74 @@
+<div class="kanban-column">
+  <!-- Column header -->
+  <div class="column-header">
+    <div class="column-title-section">
+      <h3 class="column-title">{{ column.title }}</h3>
+      <mat-icon 
+        class="column-icon" 
+        [style.color]="column.color">
+        list
+      </mat-icon>
+      <span class="task-count">
+        {{ tasks.length }}
+      </span>
+    </div>
+    
+    <!-- Column operations menu -->
+    <button mat-icon-button [matMenuTriggerFor]="columnMenu" class="column-menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    <mat-menu #columnMenu="matMenu">
+      <button mat-menu-item (click)="onAddTask()">
+        <mat-icon>add</mat-icon>
+        <span>添加任务</span>
+      </button>
+      <button mat-menu-item (click)="onEditColumn()">
+        <mat-icon>edit</mat-icon>
+        <span>编辑列</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onDeleteColumn()" class="delete-action">
+        <mat-icon>delete</mat-icon>
+        <span>删除列</span>
+      </button>
+    </mat-menu>
+  </div>
+  
+  <!-- Tasks list area -->
+  <div 
+    class="tasks-container"
+    cdkDropList
+    [cdkDropListData]="tasks"
+    [cdkDropListConnectedTo]="connectedDropLists"
+    (cdkDropListDropped)="onTaskDrop($event)">
+    
+    <!-- Task cards list -->
+    <app-task-card
+      *ngFor="let task of tasks; trackBy: trackByTaskId"
+      [task]="task"
+      [selected]="selectedTaskId === task.id"
+      (cardClick)="onTaskClick($event)"
+      (edit)="onTaskEdit($event)"
+      (delete)="onTaskDelete($event)">
+    </app-task-card>
+    
+    <!-- Empty state prompt -->
+    <div class="empty-state" *ngIf="tasks.length === 0">
+      <mat-icon class="empty-icon">inbox</mat-icon>
+      <p class="empty-text">暂无任务</p>
+      <button mat-stroked-button (click)="onAddTask()" class="add-task-btn">
+        <mat-icon>add</mat-icon>
+        添加任务
+      </button>
+    </div>
+  </div>
+  
+  <!-- Quick add task button -->
+  <div class="column-footer" *ngIf="tasks.length > 0">
+    <button mat-button (click)="onAddTask()" class="quick-add-btn">
+      <mat-icon>add</mat-icon>
+      添加任务
+    </button>
+  </div>
+</div>

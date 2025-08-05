@@ -40,14 +40,14 @@
       "description": "阿第三方",
       "status": "todo",
       "priority": "MEDIUM",
-      "type": "task",
+      "type": "TASK",
       "reporter": {
         "id": "current-user-id",
         "name": "",
         "email": ""
       },
       "labels": [],
-      "estimatedHours": 0,
+      "estimatedHours": 10,
       "actualHours": 0,
       "projectId": "1",
       "columnId": "col-1",
