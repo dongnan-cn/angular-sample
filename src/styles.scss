@@ -40,6 +40,10 @@ body {
   background: rgba(0, 0, 0, 0.3);
 }
 
+.mat-datepicker-content-container {
+  background-color: ghostwhite;
+}
+
 /* Material Design 按钮优化 */
 .mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-outlined-button {
   font-family: 'Inter', sans-serif !important;
