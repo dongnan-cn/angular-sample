@@ -99,11 +99,14 @@
 
 /* 更多操作菜单样式 */
 .more-menu {
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
+  // width: 28px;
+  // height: 28px;
   border-radius: 6px;
   transition: all 0.2s ease;
+  // display: flex; /* Use flexbox for perfect centering */
+  // align-items: center; /* Center vertically */
+  // justify-content: center; /* Center horizontally */
+  vertical-align: middle;
 }
 
 .more-menu:hover {
@@ -112,9 +115,8 @@
 
 .more-menu mat-icon {
   font-size: 18px;
-  width: 18px;
-  height: 18px;
   color: #718096;
+  height: 18px;
 }
 
 /* 任务标题样式 */
