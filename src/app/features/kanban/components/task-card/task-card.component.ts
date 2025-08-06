@@ -116,6 +116,44 @@ export class TaskCardComponent {
   getPriorityClass(): string {
     return this.task.priority.toLowerCase();
   }
+
+  /**
+   * 获取任务类型的tooltip文本
+   */
+  getTypeTooltip(): string {
+    switch (this.task.type) {
+      case TaskType.STORY:
+        return '用户故事 - 从用户角度描述的功能需求';
+      case TaskType.BUG:
+        return '缺陷 - 需要修复的问题或错误';
+      case TaskType.TASK:
+        return '任务 - 需要完成的具体工作项';
+      case TaskType.EPIC:
+        return '史诗 - 大型功能或项目里程碑';
+      default:
+        return '未知类型';
+    }
+  }
+
+  /**
+   * 获取优先级的tooltip文本
+   */
+  getPriorityTooltip(): string {
+    switch (this.task.priority) {
+      case TaskPriority.HIGHEST:
+        return '最高优先级 - 需要立即处理';
+      case TaskPriority.HIGH:
+        return '高优先级 - 尽快处理';
+      case TaskPriority.MEDIUM:
+        return '中等优先级 - 正常处理';
+      case TaskPriority.LOW:
+        return '低优先级 - 可以延后处理';
+      case TaskPriority.LOWEST:
+        return '最低优先级 - 有时间再处理';
+      default:
+        return '未知优先级';
+    }
+  }
   
   /**
    * 检查是否过期

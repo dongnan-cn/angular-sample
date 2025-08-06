@@ -23,10 +23,10 @@ export enum TaskStatus {
  * 任务类型枚举
  */
 export enum TaskType {
-  STORY = 'story',
-  BUG = 'bug',
-  TASK = 'task',
-  EPIC = 'epic'
+  STORY = 'STORY',
+  BUG = 'BUG',
+  TASK = 'TASK',
+  EPIC = 'EPIC'
 }
 
 /**

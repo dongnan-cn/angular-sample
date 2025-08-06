@@ -7,8 +7,8 @@
   
   <!-- 任务头部：类型图标和优先级 -->
   <div class="task-header">
-    <mat-icon class="task-type-icon" [class]="getTypeIconClass()">{{ getTypeIcon() }}</mat-icon>
-    <mat-icon class="priority-icon" [class]="getPriorityClass()">{{ getPriorityIcon() }}</mat-icon>
+    <mat-icon class="task-type-icon" [class]="getTypeIconClass()" [matTooltip]="getTypeTooltip()" matTooltipPosition="above">{{ getTypeIcon() }}</mat-icon>
+    <mat-icon class="priority-icon" [class]="getPriorityClass()" [matTooltip]="getPriorityTooltip()" matTooltipPosition="above">{{ getPriorityIcon() }}</mat-icon>
     
     <!-- 更多操作菜单 -->
     <button mat-icon-button [matMenuTriggerFor]="menu" class="more-menu" (click)="$event.stopPropagation()">
